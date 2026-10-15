@@ -1,0 +1,33 @@
+{
+  "name": "keyboard-pianist",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/prepare-sites-build.mjs",
+    "preview": "vite preview",
+    "test:sites": "node --test tests/sites-worker.test.mjs",
+    "update:scores": "node scripts/update-score-catalog.mjs",
+    "test": "vitest run src"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@vitejs/plugin-react": "5.0.4",
+    "fflate": "^0.8.3",
+    "midi-file": "^1.2.4",
+    "onnxruntime-web": "^1.27.0",
+    "opencc-js": "^1.4.1",
+    "opentype.js": "^2.0.0",
+    "pdfjs-dist": "^6.1.200",
+    "pinyin-pro": "^3.29.4",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "tone": "^15.1.22",
+    "vite": "6.4.2"
+  },
+  "devDependencies": {
+    "jsdom": "^30.1.2",
+    "vitest": "^5.0.3"
+  }
+}

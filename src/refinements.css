@@ -1,0 +1,339 @@
+/* Shared piano-room design: one product, adapted for physical and touch input. */
+:root {
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --muted: #b0c1c8;
+  --surface: #102b36;
+  --text-secondary: #b9cad0;
+  --text-quiet: #a6bbc4;
+}
+body { line-height: 1.5; }
+body:has(dialog[open]) { overflow: hidden; }
+button, a, input, select { touch-action: manipulation; }
+button:disabled { opacity: .55; }
+.piano-app { grid-template-columns: 240px minmax(0, 1fr); overflow: clip; }
+.sidebar { padding: 24px 16px; height: 100svh; position: sticky; top: 0; }
+.brand { padding: 0 8px 22px; }
+.brand h1 { font-size: 29px; letter-spacing: 0; }
+.brand p { font-family: inherit; font-size: 12px; letter-spacing: 1px; }
+.library-heading { margin: 20px 8px 12px; }
+.library-heading h2 { font-family: inherit; font-size: 17px; letter-spacing: 0; }
+.library-heading button { min-width: 44px; min-height: 44px; justify-content: center; align-items: center; }
+.find-score-button { margin: 0 0 12px; min-height: 44px; font-size: 14px; }
+.song-list { gap: 7px; max-height: none; min-height: 0; flex: 1; }
+.song-list .song-item { flex-shrink: 0; }
+.song-item { min-height: 76px; padding: 12px; gap: 12px; border-radius: 10px; }
+.song-item strong { font-family: inherit; font-size: 18px; font-weight: 500; }
+.song-item small { font-family: inherit; font-size: 13px; color: var(--text-secondary); }
+.song-item > svg { width: 23px; }
+.sidebar-bottom { margin: 18px 8px 0; padding: 0; }
+.sidebar-bottom p { font-size: 14px; line-height: 1.9; }
+.about-button { min-height: 40px; padding: 8px 0; font-size: 13px; opacity: 1; color: var(--text-secondary); }
+.tutorial-entry { color: var(--gold); }
+.main-stage { padding: 20px 24px 0; min-height: 100svh; }
+.stage-header, .with-sections .stage-header { height: auto; min-height: 132px; z-index: 8; padding-bottom: 14px; }
+.song-heading { position: relative; top: auto; left: auto; transform: none; margin: 0 auto; max-width: calc(100% - 390px); }
+.song-heading h2 { font-size: 32px; line-height: 1.35; letter-spacing: 2px; white-space: normal; overflow-wrap: anywhere; margin: 0 0 4px; }
+.song-heading p { font-family: inherit; font-size: 14px; letter-spacing: 0; color: var(--text-secondary); margin: 0 0 7px; }
+.song-tag { display: inline-flex; align-items: center; gap: 5px; font-family: inherit; font-size: 12px; min-height: 28px; padding: 3px 10px; letter-spacing: 0; }
+.play-mode-switch { left: 0; top: 0; transform: none; }
+.play-mode-switch button { font-size: 14px; min-height: 40px; padding: 8px 14px; }
+.import-entry { position: absolute; z-index: 9; top: 24px; right: 24px; }
+.import-button { font-family: inherit; min-height: 46px; padding: 9px 18px; font-size: 15px; border-radius: 9px; letter-spacing: 0; }
+.import-button svg { width: 20px; height: 20px; }
+.import-entry p { font-size: 12px; max-width: 250px; color: var(--text-secondary); line-height: 1.6; margin: 8px 0 0; }
+.song-sections { position: static; margin: 10px auto 0; gap: 12px; font-size: 13px; }
+.song-sections select { min-height: 40px; font-size: 14px; }
+.preview-link { font-family: inherit; font-size: 13px; min-height: 36px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.song-sections .preview-link { padding: 0 8px; }
+.melody-stage.continuous-melody { padding-right: 0; padding-bottom: 12px; }
+.segmented-guide .score-guide-heading { padding: 0 2px 8px; font-size: 13px; }
+.score-guide-heading small, .segmented-guide .score-guide-heading small { font-size: 12px; color: var(--text-secondary); }
+.segment-badge { font-size: 12px; color: var(--text-secondary); }
+.segmented-guide .score-scroll { min-height: 0; padding: 0; background: #0b2531d9; border-color: #95b1be36; border-radius: 14px; }
+.segmented-guide .score-line { min-height: 200px; padding: 14px 16px 8px; border: 0; background: #e9c78405; border-radius: 14px; }
+.segmented-guide .score-line-heading { margin-bottom: 8px; }
+.segmented-guide .score-line-heading strong { font-size: 16px; font-weight: 600; }
+.segment-progress { font-size: 12px; }
+.segment-instruction { font-size: 12px; line-height: 1.6; margin: 0 0 10px; color: var(--text-secondary); }
+.segmented-guide .sentence-notes { gap: 12px 4px; min-height: 0; }
+.segmented-guide .score-syllable { width: 48px; gap: 5px; }
+.score-character { font-family: "Noto Serif SC", serif; font-size: 28px; line-height: 1.3; }
+.segmented-guide .score-letter { min-width: 40px; min-height: 36px; height: auto; font-size: 19px; border-radius: 6px; }
+.segmented-guide .score-notes { font-size: 12px; color: #b8cdd6; font-variant-numeric: tabular-nums; }
+.instrumental-character { font-family: inherit; font-size: 12px; line-height: 1.5; }
+.instrumental-notes .score-letter { min-width: 44px; min-height: 40px; font-size: 21px; }
+.note-duration { font-size: 11px; color: #b0c3cb; line-height: 1.4; }
+.segment-navigation { margin-top: 10px; padding-top: 3px; gap: 8px; }
+.segment-navigation .preview-link { font-size: 13px; min-height: 38px; padding: 2px 4px; }
+.segment-navigation button:disabled { color: #a0b5bf; }
+.next-segment { margin: 7px 2px 0; font-size: 12px; color: var(--text-quiet); }
+.segmented-guide .score-legend { font-size: 11px; margin: 2px 2px 0; line-height: 1.6; color: var(--text-quiet); }
+.continuous-melody .next-cue-wrap { margin: 10px 14px 0 0; min-height: 40px; }
+.continuous-melody .next-cue { min-height: 40px; font-size: 14px; padding: 6px 12px; }
+.continuous-melody .next-cue b { font-size: 22px; }
+.cue-notes { font-size: 14px; }
+.continuous-melody .played-note-feedback { font-size: 12px; margin-top: 10px; color: var(--text-secondary); }
+.continuous-melody .melody-tools { margin-top: 2px; font-size: 12px; gap: 20px; }
+.piano { height: 104px; max-height: none; touch-action: none; }
+.piano button { touch-action: none; user-select: none; -webkit-user-select: none; }
+.piano-white span { font-family: inherit; font-size: 10px; }
+.keyboard-caption { margin: 8px 0 6px; text-align: center; font-size: 12px; color: var(--text-quiet); }
+.touch-keyboard-hint { display: none; }
+.computer-keyboard { margin: 0; gap: 6px; }
+.key-row { gap: 7px; }
+.computer-key { width: clamp(44px, 4.5vw, 64px); height: 44px; max-height: none; font-size: 20px; touch-action: none; -webkit-user-select: none; user-select: none; }
+.computer-key small { font-size: 11px; opacity: 1; color: #afc2cb; line-height: 1.1; }
+.computer-key.expected small, .computer-key.pressed small { color: #294350; }
+.space-key { height: 36px; max-height: none; width: min(440px, 80%); font-family: inherit; font-size: 14px; letter-spacing: 1px; touch-action: none; }
+.space-key span { font-family: inherit; font-size: 10px; top: 11px; opacity: 1; }
+.performance-controls { min-height: 96px; padding: 14px 0 12px; flex: 1; }
+.controls-group { gap: 26px; align-items: flex-start; }
+.start-button { font-family: inherit; width: 218px; height: 54px; font-size: 19px; border-radius: 28px; gap: 10px; }
+.round-control { gap: 4px; }
+.round-control > button { width: 50px; height: 50px; }
+.round-control > span { font-family: inherit; font-size: 12px; }
+.tempo-control > button { width: 68px; height: 50px; }
+.tempo-control small { font-size: 12px; }
+.stage-poem { display: none; }
+.stage-status { position: static; padding: 4px 10px; font-size: 12px; color: #f0d09b; }
+.stage-status:empty { display: none; }
+.popover { z-index: 20; background: #14313e; border-color: #6c8793; }
+.volume-popover, .tempo-popover { bottom: 88px; width: 240px; }
+.popover label { font-size: 14px; }
+.popover input[type="range"] { min-height: 32px; margin: 10px 0 0; }
+.tempo-popover .text-button { min-height: 40px; font-size: 14px; }
+.mode-menu { top: calc(100% + 8px); }
+.mode-menu button { min-height: 64px; }
+.mode-menu strong { font-size: 14px; }
+.mode-menu small, .mode-menu > span { font-size: 12px; }
+.song-menu { left: 50%; transform: translateX(-50%); width: min(340px, 90%); bottom: 0; }
+.song-menu p { font-size: 12px; }
+.song-menu button { min-height: 44px; font-size: 14px; }
+.octave-control { font-size: 14px; }
+.octave-control button { min-width: 44px; min-height: 44px; font-size: 21px; }
+.free-mode h3 { font-size: 28px; }
+.free-mode p { font-family: inherit; font-size: 14px; letter-spacing: 0; }
+.free-mode .lyric-strip { height: auto; }
+.dialog { padding: 28px; max-height: calc(100svh - 32px); overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #8199a4 #102c37; }
+.dialog-heading { align-items: flex-start; }
+.dialog-heading h2 { font-size: 27px; line-height: 1.5; }
+.icon-close { min-width: 44px; min-height: 44px; padding: 10px; }
+.dialog input, .dialog select, .dialog textarea { font-size: 16px; min-height: 44px; }
+.dialog textarea { line-height: 1.7; }
+.catalog-hint, .catalog-result p, .catalog-result small, .catalog-footer p, .catalog-source-note, .privacy-note { font-size: 12px; line-height: 1.8; color: var(--text-secondary); }
+.catalog-search input { font-size: 16px; }
+.catalog-tabs button { min-height: 44px; font-size: 14px; }
+.catalog-tabs span { font-size: 12px; }
+.catalog-result h3 { font-size: 17px; }
+.catalog-result h3 span { font-size: 11px; }
+.catalog-result > a, .catalog-result > button, .catalog-import, .catalog-more { font-size: 14px; min-height: 44px; }
+.catalog-results { max-height: min(44svh, 420px); }
+.gold-button, .secondary-button, .text-button { min-height: 44px; font-size: 14px; }
+.import-note, .import-options, .file-formats, .sample-link { font-size: 13px; line-height: 1.8; }
+.sample-link { min-height: 44px; margin-top: 10px; }
+.score-meta label, .track-label, .lyrics-label, .backing-option { font-size: 14px; }
+.review-table { overscroll-behavior-x: contain; }
+.table-scroll-hint { margin: 8px 0; font-size: 12px; color: var(--text-secondary); }
+.review-table th, .review-table td { font-size: 13px; }
+.review-table input, .review-table select { font-size: 14px; min-height: 40px; }
+.review-actions { gap: 12px; }
+.process-status, .error-message { font-size: 14px; }
+.process-status > span:last-child { color: var(--text-secondary); font-size: 12px; }
+.tutorial-dialog { padding: 28px 32px; }
+.tutorial-dialog h2 { font-size: 28px; }
+.tutorial-skip, .tutorial-back { min-height: 44px; font-size: 13px; }
+.tutorial-intro, .tutorial-feedback { font-size: 14px; }
+.tutorial-note, .tutorial-footer > span, .tutorial-options p, .tutorial-song-example > p { font-size: 13px; }
+.tutorial-options strong, .tutorial-primary { font-size: 14px; }
+.tutorial-song-example small { font-size: 12px; }
+
+@media (min-width: 901px) {
+  .main-stage { padding-top: 16px; }
+  .stage-header, .with-sections .stage-header { min-height: 128px; padding-bottom: 10px; }
+  .song-heading h2 { font-size: 30px; }
+  .song-heading p { display: inline; margin: 0 8px 0 0; }
+  .segmented-guide { display: grid; grid-template-columns: 1fr auto; }
+  .segmented-guide .score-guide-heading, .segmented-guide .score-scroll { grid-column: 1 / -1; }
+  .segmented-guide .score-line { min-height: 184px; padding: 10px 14px 5px; }
+  .segmented-guide .score-line-heading { margin-bottom: 7px; }
+  .segment-instruction { display: none; }
+  .segmented-guide .score-syllable { gap: 4px; }
+  .score-character { font-size: 27px; line-height: 1.25; }
+  .segmented-guide .score-letter { min-height: 34px; }
+  .segment-navigation { margin-top: 6px; }
+  .segment-navigation .preview-link { min-height: 34px; }
+  .segmented-guide .score-legend { align-self: center; text-align: right; margin: 7px 0 0 18px; }
+  .piano { height: 96px; }
+  .keyboard-caption { margin: 6px 0 4px; }
+  .computer-key { height: 42px; }
+  .space-key { height: 34px; }
+  .performance-controls { min-height: 90px; padding: 10px 0; }
+}
+
+@media (min-width: 621px) and (max-width: 1100px) {
+  .piano-app { grid-template-columns: 190px minmax(0, 1fr); }
+  .sidebar { padding: 20px 12px; }
+  .brand h1 { font-size: 24px; }
+  .brand p { font-size: 11px; letter-spacing: 0; }
+  .main-stage { padding: 20px 18px 0; }
+  .song-heading { max-width: calc(100% - 300px); }
+  .song-heading h2 { font-size: 28px; }
+  .play-mode-switch button { font-size: 12px; padding: 8px 9px; }
+  .import-entry { right: 18px; }
+  .import-button { font-size: 14px; padding: 8px 12px; }
+  .import-entry p { display: none; }
+  .computer-key { width: 44px; }
+  .key-row { gap: 5px; }
+  .controls-group { gap: 18px; }
+  .start-button { width: 180px; }
+}
+
+@media (max-width: 620px) {
+  .piano-app { display: flex; overflow: clip; }
+  .room-background { background-position: 62% 50%; }
+  .sidebar { position: relative; top: auto; height: auto; padding: 16px 16px 0; background: #082330c9; }
+  .brand { padding: 0; width: max-content; }
+  .brand h1 { font-size: 22px; line-height: 1.4; margin-bottom: 3px; }
+  .brand p { font-size: 11px; letter-spacing: 0; }
+  .import-entry { top: 18px; right: 16px; }
+  .import-button { min-height: 44px; font-size: 13px; padding: 8px 10px; gap: 6px; }
+  .import-button svg { width: 17px; }
+  .import-entry p { display: none; }
+  .find-score-button { position: absolute; top: 18px; right: 121px; width: 44px; height: 44px; min-height: 44px; padding: 10px; margin: 0; }
+  .song-list { margin: 13px -2px 0; padding: 2px; max-height: none; gap: 8px; flex: none; scrollbar-width: thin; scrollbar-color: #6a7e86 transparent; }
+  .song-item { min-height: 58px; min-width: 100px; max-width: 180px; padding: 8px 11px; gap: 9px; }
+  .song-item strong { font-size: 15px; }
+  .song-item small { font-size: 12px; }
+  .song-item > svg { width: 19px; }
+  .sidebar-bottom { display: flex; justify-content: flex-end; gap: 16px; margin: 3px 0 0; padding: 0; }
+  .sidebar-bottom > p, .sidebar-bottom > .small-rule { display: none; }
+  .sidebar-bottom .about-button { min-height: 36px; padding: 5px 0; font-size: 12px; }
+  .main-stage { padding: 0 16px; min-height: auto; }
+  .stage-header, .with-sections .stage-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 16px 0; min-height: 0; height: auto; }
+  .song-heading { grid-column: 1; grid-row: 1; max-width: none; margin: 0; text-align: left; position: relative; left: auto; top: auto; transform: none; }
+  .song-heading h2 { font-size: 28px; line-height: 1.35; letter-spacing: 1px; margin-bottom: 4px; }
+  .song-heading p { display: inline; font-size: 13px; margin-right: 7px; }
+  .song-tag { min-height: 26px; padding: 2px 7px; font-size: 11px; vertical-align: middle; }
+  .play-mode-switch { position: static; grid-column: 2; grid-row: 1; align-self: start; transform: none; margin-top: 1px; padding: 3px; gap: 1px; }
+  .play-mode-switch button { min-height: 38px; padding: 6px 9px; font-size: 13px; }
+  .song-sections { grid-column: 1 / -1; grid-row: 2; margin: 0; justify-content: flex-start; gap: 10px; font-size: 12px; }
+  .song-sections select { min-height: 42px; padding: 7px 24px 7px 10px; min-width: 102px; font-size: 14px; }
+  .song-sections .preview-link { margin-left: auto; font-size: 12px; padding: 0; min-height: 42px; }
+  .melody-stage.continuous-melody { display: block; padding-bottom: 8px; }
+  .segmented-guide .score-guide-heading { padding: 0 2px 8px; font-size: 13px; }
+  .segmented-guide .score-guide-heading small { display: none; }
+  .segmented-guide .score-scroll { padding: 0; min-height: 0; }
+  .segmented-guide .score-line { min-height: 0; padding: 12px 12px 5px; }
+  .segmented-guide .score-line-heading strong { font-size: 15px; }
+  .segment-progress { font-size: 12px; }
+  .segment-instruction { font-size: 12px; margin-bottom: 12px; }
+  .segmented-guide .sentence-notes { display: grid; grid-template-columns: repeat(auto-fit, 44px); justify-content: start; gap: 12px 3px; }
+  .segmented-guide .score-syllable { width: 44px; gap: 5px; }
+  .score-character { font-size: 26px; }
+  .segmented-guide .score-letter, .instrumental-notes .score-letter { width: 44px; height: 44px; min-height: 44px; font-size: 20px; }
+  .segmented-guide .score-notes { font-size: 12px; }
+  .instrumental-character { font-size: 12px; }
+  .note-duration { font-size: 11px; }
+  .segment-navigation { margin-top: 12px; padding-top: 1px; gap: 4px; }
+  .segment-navigation .preview-link { font-size: 12px; min-height: 44px; padding: 2px; }
+  .next-segment { font-size: 12px; margin: 8px 2px 0; }
+  .segmented-guide .score-legend { font-size: 11px; line-height: 1.7; margin-top: 2px; }
+  .continuous-melody .next-cue-wrap { display: flex; justify-content: center; margin: 10px 0 0; }
+  .continuous-melody .next-cue { font-size: 14px; min-height: 44px; gap: 8px; }
+  .continuous-melody .next-cue b { font-size: 22px; }
+  .continuous-melody .played-note-feedback { font-size: 12px; margin: 6px 0 0; }
+  .played-note-feedback.is-empty { display: none; }
+  .continuous-melody .melody-tools { margin: 3px 0 0; gap: 16px; font-size: 12px; }
+  .melody-tools .preview-link { min-height: 44px; font-size: 13px; }
+  .piano { height: 94px; margin: 0; padding: 9px 5px 7px; }
+  .piano-white span { font-size: 9px; }
+  .keyboard-caption { margin: 12px 0 8px; font-size: 12px; }
+  .desktop-keyboard-hint { display: none; }
+  .touch-keyboard-hint { display: inline; }
+  .computer-keyboard { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 7px 5px; }
+  .key-row { display: contents; }
+  .computer-key { width: 100%; min-width: 0; max-width: none; height: 48px; max-height: none; border-radius: 7px; font-size: 20px; gap: 3px; }
+  .computer-key small { font-size: 10px; }
+  .space-key { grid-column: 1 / -1; margin: 0; width: 100%; height: 44px; max-height: none; font-size: 14px; }
+  .space-key span { top: 15px; font-size: 10px; }
+  .performance-controls { position: sticky; bottom: 0; z-index: 10; flex: none; min-height: 92px; margin: 12px -16px 0; padding: 12px 16px calc(10px + env(safe-area-inset-bottom)); background: #0c2733f5; border-top: 1px solid #a6c4cf30; backdrop-filter: blur(16px); }
+  .controls-group { width: 100%; justify-content: space-between; gap: 10px; }
+  .start-button { flex: 1; width: auto; max-width: 200px; height: 50px; font-size: 16px; gap: 7px; }
+  .start-button svg { width: 22px; }
+  .round-control { min-width: 44px; gap: 3px; }
+  .round-control > button { width: 44px; height: 44px; }
+  .round-control > button > svg { width: 22px; height: 22px; }
+  .round-control > span { font-size: 11px; }
+  .tempo-control > button { width: 60px; height: 44px; }
+  .tempo-control small { font-size: 11px; }
+  .volume-popover, .tempo-popover { bottom: 82px; width: 230px; left: auto; right: -4px; transform: none; }
+  .mode-menu { width: 260px; left: 0; transform: none; }
+  .song-menu { bottom: 0; }
+  .free-mode { padding: 14px 0 8px; }
+  .lyric-strip:has(.free-mode) { height: auto; }
+  .free-mode h3 { font-size: 24px; letter-spacing: 0; }
+  .free-mode p { font-size: 14px; line-height: 1.8; }
+  .octave-control { font-size: 14px; gap: 18px; }
+  .dialog { width: calc(100vw - 24px); padding: 20px 18px; border-radius: 16px; max-height: calc(100svh - 24px); }
+  .dialog-heading { gap: 10px; margin-bottom: 18px; }
+  .dialog-heading h2 { font-size: 23px; }
+  .dialog .eyebrow { font-size: 10px; letter-spacing: 2px; }
+  .icon-close { margin: -7px -8px 0 0; }
+  .catalog-search { gap: 8px; }
+  .catalog-search input { padding: 10px; font-size: 16px; }
+  .catalog-tabs { margin-top: 14px; gap: 22px; }
+  .catalog-results { max-height: 38svh; }
+  .catalog-result { gap: 10px; flex-wrap: wrap; padding: 14px 0; }
+  .catalog-file-icon { width: 32px; height: 40px; }
+  .catalog-result-copy { flex-basis: calc(100% - 44px); }
+  .catalog-result h3 { font-size: 16px; }
+  .catalog-result h3 span { font-size: 10px; }
+  .catalog-result > button, .catalog-result > a { margin-left: 42px; min-height: 40px; padding: 4px 12px; border: 1px solid #d4bc8c55; border-radius: 7px; background: #d4bc8c0c; }
+  .catalog-footer { margin-top: 14px; gap: 12px; }
+  .catalog-footer p, .catalog-source-note, .privacy-note { font-size: 12px; }
+  .catalog-source-note { margin-top: 12px; }
+  .import-dropzone { min-height: 190px; padding: 24px 14px; }
+  .import-dropzone h3 { font-size: 22px; }
+  .import-dropzone p { font-size: 14px; }
+  .import-options { flex-wrap: wrap; gap: 8px; }
+  .import-note, .sample-link { font-size: 13px; }
+  .import-note { padding: 12px; }
+  .score-meta { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .table-caption { align-items: flex-start; flex-wrap: wrap; gap: 5px; font-size: 12px; }
+  .score-meta label:first-child { grid-column: 1 / -1; }
+  .review-actions { flex-wrap: wrap; }
+  .review-actions > div { width: 100%; display: flex; justify-content: stretch; gap: 8px; }
+  .review-actions .gold-button, .review-actions .secondary-button { flex: 1; padding: 10px; font-size: 13px; }
+  .tutorial-dialog { padding: 20px; }
+  .tutorial-dialog h2 { font-size: 24px; }
+  .tutorial-topline { font-size: 12px; }
+  .tutorial-practice { gap: 10px; padding: 24px 0 18px; }
+  .tutorial-key { width: 84px; height: 120px; }
+  .tutorial-key kbd { font-size: 38px; }
+  .tutorial-footer { gap: 12px; flex-wrap: wrap; }
+  .tutorial-footer > span { flex-basis: 100%; }
+  .tutorial-primary { margin-left: auto; }
+  .tutorial-song-example { padding: 16px 8px; gap: 12px; }
+  .tutorial-song-example > div { width: 78px; }
+  .tutorial-options { grid-template-columns: 1fr; gap: 14px; }
+}
+
+@media (max-width: 360px) {
+  .brand h1 { font-size: 20px; }
+  .brand p { font-size: 10px; }
+  .find-score-button { right: 113px; width: 38px; padding: 8px; }
+  .import-entry { right: 12px; }
+  .import-button { padding: 8px; font-size: 12px; }
+  .sidebar { padding-left: 12px; padding-right: 12px; }
+  .main-stage { padding-left: 12px; padding-right: 12px; }
+  .stage-header, .with-sections .stage-header { gap: 10px; }
+  .play-mode-switch button { font-size: 12px; padding: 6px 7px; }
+  .computer-keyboard { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .performance-controls { margin-left: -12px; margin-right: -12px; padding-left: 12px; padding-right: 12px; }
+  .controls-group { gap: 7px; }
+  .start-button { font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

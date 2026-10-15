@@ -1,0 +1,29 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+.wrangler/
+.vercel/
+coverage/
+qa/
+AGENTS.md
+design-qa.md
+cloudflare-deployment.json
+keyboard-pianist-backups/
+
+# Keep local working notes out of the public repository.
+/docs/*
+!/docs/getting-started.md
+!/docs/music-library.md
+!/docs/images/
+!/docs/releases/
+
+# Imported personal scores and credentials must stay local.
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
