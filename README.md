@@ -8,9 +8,24 @@
 
 **[🎹 打开琴房，直接体验](https://keyboard-pianist.pages.dev/)** · [三步开始](#三步弹出第一段旋律) · [带上自己的乐谱](#把自己的乐谱带进琴房)
 
+## 28 秒，看看怎么弹
+
+跟着歌词首字母敲键盘，听听实际弹出的旋律，再切换到自由弹奏。
+
+[▶ 播放真实演示（含琴声）](https://github.com/w88856678-rgb/keyboard-pianist/releases/download/v0.1.0/keyboard-pianist-demo.mp4)
+
+[打开琴房，自己试试](https://keyboard-pianist.pages.dev/) · [下载 1080p 演示视频](https://github.com/w88856678-rgb/keyboard-pianist/releases/download/v0.1.0/keyboard-pianist-demo.mp4)
+
+*视频录制的是当前在线琴房，琴声来自网页实际演奏。*
+
+<details>
+<summary>查看仓库新版「沉浸舞台」界面</summary>
+
 ![键盘钢琴家 · 沉浸舞台实际界面](docs/images/desktop.png)
 
 *上图为本仓库的「沉浸舞台」界面；在线体验入口目前保留此前发布的琴房界面。*
+
+</details>
 
 ## 三步，弹出第一段旋律
 
