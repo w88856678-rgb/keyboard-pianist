@@ -12,7 +12,7 @@
 
 跟着歌词首字母敲键盘，听听实际弹出的旋律，再切换到自由弹奏。
 
-[▶ 播放真实演示（含琴声）](https://github.com/w88856678-rgb/keyboard-pianist/releases/download/v0.1.0/keyboard-pianist-demo.mp4)
+https://github.com/user-attachments/assets/6f3c6a84-b264-429b-be4d-569e74d637e7
 
 [打开琴房，自己试试](https://keyboard-pianist.pages.dev/) · [下载 1080p 演示视频](https://github.com/w88856678-rgb/keyboard-pianist/releases/download/v0.1.0/keyboard-pianist-demo.mp4)
 
